@@ -1,0 +1,95 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "Midnite Classic Solar",
+                "description": "Configurer votre contrôleur de charge Midnite Classic via Modbus TCP.",
+                "data": {
+                    "host": "Hôte",
+                    "port": "Port",
+                    "scan_interval": "Intervalle de rafraîchissement (secondes)"
+                }
+            },
+            "reconfigure": {
+                "title": "Reconfigurer Midnite Classic Solar",
+                "data": {
+                    "host": "Hôte",
+                    "port": "Port",
+                    "scan_interval": "Intervalle de rafraîchissement (secondes)"
+                }
+            }
+        },
+        "error": {
+            "cannot_connect": "Impossible de se connecter au Classic à l'adresse indiquée.",
+            "invalid_device": "L'appareil à cette adresse n'est pas un Midnite Classic."
+        },
+        "abort": {
+            "already_configured": "Ce Classic est déjà configuré.",
+            "reconfigure_successful": "Configuration mise à jour avec succès."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "bat_voltage": { "name": "Tension batterie" },
+            "pv_voltage": { "name": "Tension PV" },
+            "bat_current": { "name": "Courant batterie" },
+            "pv_current": { "name": "Courant PV" },
+            "power": { "name": "Puissance" },
+            "last_voc": { "name": "Dernière VOC" },
+            "energy_today": { "name": "Énergie du jour" },
+            "amp_hours_today": { "name": "Ampères-heures du jour" },
+            "lifetime_energy": { "name": "Énergie totale" },
+            "charge_stage": { "name": "Étape de charge" },
+            "charge_stage_code": { "name": "Code étape de charge" },
+            "reason_for_resting": { "name": "Raison du repos" },
+            "reason_for_resting_code": { "name": "Code raison du repos" },
+            "bat_temperature": { "name": "Température batterie" },
+            "fet_temperature": { "name": "Température FET" },
+            "pcb_temperature": { "name": "Température PCB" },
+            "float_time_today": { "name": "Temps en float du jour" },
+            "absorb_time": { "name": "Temps d'absorption" },
+            "wb_bat_current": { "name": "Courant batterie Whizbang" },
+            "soc": { "name": "État de charge" },
+            "remaining_amp_hours": { "name": "Ampères-heures restants" },
+            "vbatt_reg_setpoint_temp_comp": { "name": "Consigne tension compensée en température" },
+            "state": { "name": "État du Classic" },
+            "shunt_temperature": { "name": "Température du shunt" },
+            "total_amp_hours": { "name": "Ampères-heures totaux" },
+            "positive_amp_hours": { "name": "Ampères-heures positifs Whizbang" },
+            "negative_amp_hours": { "name": "Ampères-heures négatifs Whizbang" },
+            "net_amp_hours": { "name": "Ampères-heures nets Whizbang" },
+            "load_power": { "name": "Puissance consommée" },
+            "battery_charge_power": { "name": "Puissance de charge batterie" },
+            "battery_discharge_power": { "name": "Puissance de décharge batterie" },
+            "battery_power": { "name": "Puissance batterie" },
+            "battery_charge_energy": { "name": "Énergie de charge batterie" },
+            "battery_discharge_energy": { "name": "Énergie de décharge batterie" },
+            "info_flags": { "name": "Indicateurs d'état" }
+        },
+        "number": {
+            "absorb_voltage": { "name": "Tension d'absorption" },
+            "float_voltage": { "name": "Tension de float" },
+            "equalize_voltage": { "name": "Tension d'égalisation" },
+            "absorb_time_setting": { "name": "Durée d'absorption" },
+            "equalize_time_setting": { "name": "Durée d'égalisation" },
+            "equalize_interval_days": { "name": "Intervalle d'égalisation" },
+            "bat_current_limit": { "name": "Limite de courant batterie" },
+            "max_input_current": { "name": "Courant d'entrée max" },
+            "ending_amps": { "name": "Courant de fin" },
+            "rebulk_volts": { "name": "Tension de re-bulk" },
+            "nominal_battery_voltage": { "name": "Tension nominale batterie" },
+            "min_absorb_time": { "name": "Durée min d'absorption" },
+            "max_temp_comp_voltage": { "name": "Tension max comp. température" },
+            "min_temp_comp_voltage": { "name": "Tension min comp. température" },
+            "temp_comp_value": { "name": "Valeur comp. température" }
+        },
+        "select": {
+            "mppt_mode": { "name": "Mode MPPT" },
+            "force_charge_stage": { "name": "Forcer l'étape de charge" }
+        },
+        "button": {
+            "reset_faults": { "name": "Réinitialiser les défauts" },
+            "force_sweep": { "name": "Forcer un balayage MPPT" }
+        }
+    }
+}

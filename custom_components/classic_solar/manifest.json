@@ -1,0 +1,14 @@
+{
+    "domain": "classic_solar",
+    "name": "Midnite Classic Solar",
+    "codeowners": ["@Gecka-Apps"],
+    "config_flow": true,
+    "dependencies": [],
+    "documentation": "https://github.com/Gecka-Apps/hass-midnite-classic-solar",
+    "iot_class": "local_polling",
+    "integration_type": "device",
+    "issue_tracker": "https://github.com/Gecka-Apps/hass-midnite-classic-solar/issues",
+    "homeassistant": "2024.1.0",
+    "requirements": ["pymodbus>=3.6.0"],
+    "version": "1.0.0"
+}

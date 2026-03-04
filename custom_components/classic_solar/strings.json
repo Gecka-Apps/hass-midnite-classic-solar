@@ -1,0 +1,95 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "Midnite Classic Solar",
+                "description": "Configure your Midnite Classic charge controller via Modbus TCP.",
+                "data": {
+                    "host": "Host",
+                    "port": "Port",
+                    "scan_interval": "Polling interval (seconds)"
+                }
+            },
+            "reconfigure": {
+                "title": "Reconfigure Midnite Classic Solar",
+                "data": {
+                    "host": "Host",
+                    "port": "Port",
+                    "scan_interval": "Polling interval (seconds)"
+                }
+            }
+        },
+        "error": {
+            "cannot_connect": "Cannot connect to the Classic at the specified address.",
+            "invalid_device": "The device at this address is not a Midnite Classic."
+        },
+        "abort": {
+            "already_configured": "This Classic is already configured.",
+            "reconfigure_successful": "Configuration updated successfully."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "bat_voltage": { "name": "Battery Voltage" },
+            "pv_voltage": { "name": "PV Voltage" },
+            "bat_current": { "name": "Battery Current" },
+            "pv_current": { "name": "PV Current" },
+            "power": { "name": "Power" },
+            "last_voc": { "name": "Last VOC" },
+            "energy_today": { "name": "Energy Today" },
+            "amp_hours_today": { "name": "Amp Hours Today" },
+            "lifetime_energy": { "name": "Lifetime Energy" },
+            "charge_stage": { "name": "Charge Stage" },
+            "charge_stage_code": { "name": "Charge Stage Code" },
+            "reason_for_resting": { "name": "Reason For Resting" },
+            "reason_for_resting_code": { "name": "Reason For Resting Code" },
+            "bat_temperature": { "name": "Battery Temperature" },
+            "fet_temperature": { "name": "FET Temperature" },
+            "pcb_temperature": { "name": "PCB Temperature" },
+            "float_time_today": { "name": "Float Time Today" },
+            "absorb_time": { "name": "Absorb Time" },
+            "wb_bat_current": { "name": "Whizbang Battery Current" },
+            "soc": { "name": "State of Charge" },
+            "remaining_amp_hours": { "name": "Remaining Amp Hours" },
+            "vbatt_reg_setpoint_temp_comp": { "name": "Battery Voltage Temp Comp Setpoint" },
+            "state": { "name": "Classic State" },
+            "shunt_temperature": { "name": "Shunt Temperature" },
+            "total_amp_hours": { "name": "Total Amp Hours" },
+            "positive_amp_hours": { "name": "Whizbang Positive Amp Hours" },
+            "negative_amp_hours": { "name": "Whizbang Negative Amp Hours" },
+            "net_amp_hours": { "name": "Whizbang Net Amp Hours" },
+            "load_power": { "name": "Load Power" },
+            "battery_charge_power": { "name": "Battery Charge Power" },
+            "battery_discharge_power": { "name": "Battery Discharge Power" },
+            "battery_power": { "name": "Battery Power" },
+            "battery_charge_energy": { "name": "Battery Charge Energy" },
+            "battery_discharge_energy": { "name": "Battery Discharge Energy" },
+            "info_flags": { "name": "Info Flags" }
+        },
+        "number": {
+            "absorb_voltage": { "name": "Absorb Voltage" },
+            "float_voltage": { "name": "Float Voltage" },
+            "equalize_voltage": { "name": "Equalize Voltage" },
+            "absorb_time_setting": { "name": "Absorb Time Setting" },
+            "equalize_time_setting": { "name": "Equalize Time Setting" },
+            "equalize_interval_days": { "name": "Equalize Interval" },
+            "bat_current_limit": { "name": "Battery Current Limit" },
+            "max_input_current": { "name": "Max Input Current" },
+            "ending_amps": { "name": "Ending Amps" },
+            "rebulk_volts": { "name": "Re-bulk Voltage" },
+            "nominal_battery_voltage": { "name": "Nominal Battery Voltage" },
+            "min_absorb_time": { "name": "Min Absorb Time" },
+            "max_temp_comp_voltage": { "name": "Max Temp Comp Voltage" },
+            "min_temp_comp_voltage": { "name": "Min Temp Comp Voltage" },
+            "temp_comp_value": { "name": "Temp Comp Value" }
+        },
+        "select": {
+            "mppt_mode": { "name": "MPPT Mode" },
+            "force_charge_stage": { "name": "Force Charge Stage" }
+        },
+        "button": {
+            "reset_faults": { "name": "Reset Faults" },
+            "force_sweep": { "name": "Force MPPT Sweep" }
+        }
+    }
+}

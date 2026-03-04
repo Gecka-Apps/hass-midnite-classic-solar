@@ -1,0 +1,104 @@
+# Copyright (C) 2026 Gecka <https://gecka.nc>
+# Author: Laurent Dinclaux <laurent@gecka.nc>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+"""Button platform for the Midnite Classic Solar integration."""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+
+from homeassistant.components.button import ButtonEntity, ButtonEntityDescription
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.update_coordinator import CoordinatorEntity
+
+from .const import DOMAIN
+from .coordinator import ClassicSolarCoordinator
+
+# Force Flag Bits: register 4160 (low word, addr 4159) / 4161 (high word, addr 4160)
+ADDR_FORCE_LOW = 4159   # register 4160
+ADDR_FORCE_HIGH = 4160  # register 4161
+
+# Remote buttons: register 4221 (addr 4220)
+ADDR_REMOTE_BUTTONS = 4220
+
+
+@dataclass(frozen=True, kw_only=True)
+class ClassicSolarButtonDescription(ButtonEntityDescription):
+    """Describe a Classic Solar button."""
+
+    register_address: int
+    register_value: int
+
+
+BUTTON_DESCRIPTIONS: list[ClassicSolarButtonDescription] = [
+    ClassicSolarButtonDescription(
+        key="reset_faults",
+        translation_key="reset_faults",
+        name="Reset Faults",
+        register_address=ADDR_FORCE_HIGH,
+        register_value=0x0080,  # ForceResetFaultsF (high word of 0x00800000)
+        icon="mdi:alert-remove",
+    ),
+    ClassicSolarButtonDescription(
+        key="force_sweep",
+        translation_key="force_sweep",
+        name="Force MPPT Sweep",
+        register_address=ADDR_REMOTE_BUTTONS,
+        register_value=0x0010,  # ENTER_key
+        icon="mdi:refresh",
+        entity_registry_enabled_default=False,
+    ),
+]
+
+
+async def async_setup_entry(
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+    async_add_entities: AddEntitiesCallback,
+) -> None:
+    coordinator: ClassicSolarCoordinator = hass.data[DOMAIN][entry.entry_id]
+    async_add_entities(
+        ClassicSolarButton(coordinator, desc) for desc in BUTTON_DESCRIPTIONS
+    )
+
+
+class ClassicSolarButton(
+    CoordinatorEntity[ClassicSolarCoordinator], ButtonEntity
+):
+    """Representation of a Classic Solar button."""
+
+    entity_description: ClassicSolarButtonDescription
+    _attr_has_entity_name = True
+
+    def __init__(
+        self,
+        coordinator: ClassicSolarCoordinator,
+        description: ClassicSolarButtonDescription,
+    ) -> None:
+        super().__init__(coordinator)
+        self.entity_description = description
+        self._attr_unique_id = f"{coordinator.unique_id}_{description.key}"
+        self._attr_device_info = coordinator.device_info
+
+    async def async_press(self) -> None:
+        await self.coordinator.async_write_register(
+            self.entity_description.register_address,
+            self.entity_description.register_value,
+        )

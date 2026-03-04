@@ -1,0 +1,115 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get version from tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Check manifest.json version matches tag
+        run: |
+          manifest_version=$(python3 -c "import json; print(json.load(open('custom_components/classic_solar/manifest.json'))['version'])")
+          if [ "$manifest_version" != "${{ steps.version.outputs.version }}" ]; then
+            echo "::error::manifest.json version ($manifest_version) does not match tag (${{ steps.version.outputs.version }})"
+            exit 1
+          fi
+
+      - name: Get previous tag
+        id: prev_tag
+        run: |
+          prev=$(git tag --sort=-v:refname | grep '^v' | sed -n '2p')
+          echo "tag=${prev:-$(git rev-list --max-parents=0 HEAD)}" >> "$GITHUB_OUTPUT"
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          from_ref="${{ steps.prev_tag.outputs.tag }}"
+          to_ref="${{ github.ref_name }}"
+
+          changelog=""
+          features=""
+          fixes=""
+          refactors=""
+          docs=""
+          chores=""
+          other=""
+
+          while IFS= read -r line; do
+            hash="${line%% *}"
+            msg="${line#* }"
+            short="${hash:0:7}"
+
+            case "$msg" in
+              feat\(*\):*|feat:*)
+                clean="${msg#feat}"
+                clean="${clean#(*):}"
+                clean="${clean#: }"
+                features="${features}- ${clean} (\`${short}\`)"$'\n'
+                ;;
+              fix\(*\):*|fix:*)
+                clean="${msg#fix}"
+                clean="${clean#(*):}"
+                clean="${clean#: }"
+                fixes="${fixes}- ${clean} (\`${short}\`)"$'\n'
+                ;;
+              refactor\(*\):*|refactor:*)
+                clean="${msg#refactor}"
+                clean="${clean#(*):}"
+                clean="${clean#: }"
+                refactors="${refactors}- ${clean} (\`${short}\`)"$'\n'
+                ;;
+              docs\(*\):*|docs:*)
+                clean="${msg#docs}"
+                clean="${clean#(*):}"
+                clean="${clean#: }"
+                docs="${docs}- ${clean} (\`${short}\`)"$'\n'
+                ;;
+              chore\(*\):*|chore:*)
+                clean="${msg#chore}"
+                clean="${clean#(*):}"
+                clean="${clean#: }"
+                chores="${chores}- ${clean} (\`${short}\`)"$'\n'
+                ;;
+              *)
+                other="${other}- ${msg} (\`${short}\`)"$'\n'
+                ;;
+            esac
+          done < <(git log "${from_ref}..${to_ref}" --pretty=format:"%H %s" --no-merges)
+
+          {
+            [ -n "$features" ] && printf '## Features\n\n%s\n' "$features"
+            [ -n "$fixes" ] && printf '## Bug Fixes\n\n%s\n' "$fixes"
+            [ -n "$refactors" ] && printf '## Refactoring\n\n%s\n' "$refactors"
+            [ -n "$docs" ] && printf '## Documentation\n\n%s\n' "$docs"
+            [ -n "$chores" ] && printf '## Chores\n\n%s\n' "$chores"
+            [ -n "$other" ] && printf '## Other\n\n%s\n' "$other"
+          } > changelog.md
+
+          if [ ! -s changelog.md ]; then
+            echo "No changes found." > changelog.md
+          fi
+
+          cat changelog.md
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          body_path: changelog.md
+          generate_release_notes: false
