@@ -28,12 +28,8 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN
+from .const import ADDR_FORCE_FLAGS_HIGH, DOMAIN
 from .coordinator import ClassicSolarCoordinator
-
-# Force Flag Bits: register 4160 (low word, addr 4159) / 4161 (high word, addr 4160)
-ADDR_FORCE_LOW = 4159   # register 4160
-ADDR_FORCE_HIGH = 4160  # register 4161
 
 # Remote buttons: register 4221 (addr 4220)
 ADDR_REMOTE_BUTTONS = 4220
@@ -51,15 +47,13 @@ BUTTON_DESCRIPTIONS: list[ClassicSolarButtonDescription] = [
     ClassicSolarButtonDescription(
         key="reset_faults",
         translation_key="reset_faults",
-        name="Reset Faults",
-        register_address=ADDR_FORCE_HIGH,
+        register_address=ADDR_FORCE_FLAGS_HIGH,
         register_value=0x0080,  # ForceResetFaultsF (high word of 0x00800000)
         icon="mdi:alert-remove",
     ),
     ClassicSolarButtonDescription(
         key="force_sweep",
         translation_key="force_sweep",
-        name="Force MPPT Sweep",
         register_address=ADDR_REMOTE_BUTTONS,
         register_value=0x0010,  # ENTER_key
         icon="mdi:refresh",
@@ -101,4 +95,5 @@ class ClassicSolarButton(
         await self.coordinator.async_write_register(
             self.entity_description.register_address,
             self.entity_description.register_value,
+            commit_eeprom=False,
         )

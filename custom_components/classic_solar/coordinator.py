@@ -34,6 +34,7 @@ from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.storage import Store
 
 from .const import (
+    ADDR_FORCE_FLAGS_LOW,
     ADDR_MAX_INPUT_CURRENT,
     ADDR_WRITE,
     BLOCK_BATTERY_PARAMS_ADDR,
@@ -52,6 +53,7 @@ from .const import (
     DEFAULT_SLAVE_ID,
     DEVICE_TYPES,
     DOMAIN,
+    FORCE_EEPROM_UPDATE,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -95,7 +97,7 @@ class ClassicSolarCoordinator(DataUpdateCoordinator[dict]):
         model = DEVICE_TYPES.get(self._device_type, f"Classic {self._device_type}")
         return DeviceInfo(
             identifiers={(DOMAIN, self.unique_id)},
-            name=f"Midnite {model}",
+            name=model,
             manufacturer="Midnite Solar",
             model=model,
         )
@@ -368,8 +370,18 @@ class ClassicSolarCoordinator(DataUpdateCoordinator[dict]):
     # Writing
     # ------------------------------------------------------------------
 
-    async def async_write_register(self, address: int, value: int) -> None:
-        """Write a single register via Modbus TCP."""
+    async def async_write_register(
+        self, address: int, value: int, commit_eeprom: bool = True
+    ) -> None:
+        """Write a single register via Modbus TCP.
+
+        Settings registers are marked (EE) in the Modbus spec: a write lands in
+        RAM only, and the Classic restores the stored value on its next EEPROM
+        reload. Setting ForceEEpromUpdateWriteF saves every EEPROM-backed
+        register at once, so one commit per write is enough. Trigger registers
+        such as the Force Flag Bits hold no persistent value and pass
+        commit_eeprom=False.
+        """
         async with self._modbus_lock:
             result = await self.client.write_register(
                 address, value, device_id=DEFAULT_SLAVE_ID
@@ -378,6 +390,19 @@ class ClassicSolarCoordinator(DataUpdateCoordinator[dict]):
                 raise HomeAssistantError(
                     f"Failed to write value {value} to register at address {address}"
                 )
+
+            if commit_eeprom:
+                result = await self.client.write_register(
+                    ADDR_FORCE_FLAGS_LOW,
+                    FORCE_EEPROM_UPDATE,
+                    device_id=DEFAULT_SLAVE_ID,
+                )
+                if result.isError():
+                    raise HomeAssistantError(
+                        f"Value {value} written to register at address {address} "
+                        "but the EEPROM commit failed: the Classic will discard "
+                        "it on its next EEPROM reload"
+                    )
 
         # Refresh data after successful write
         await self.async_request_refresh()

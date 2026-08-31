@@ -52,6 +52,15 @@ BLOCK_FIRMWARE_COUNT = 4  # registers 16387-16390
 ADDR_MAX_INPUT_CURRENT = 4198
 
 # ---------------------------------------------------------------------------
+# Force Flag Bits: write-only trigger register 4160 (low word) / 4161 (high word)
+# ---------------------------------------------------------------------------
+ADDR_FORCE_FLAGS_LOW = 4159   # register 4160
+ADDR_FORCE_FLAGS_HIGH = 4160  # register 4161
+
+# ForceEEpromUpdateWriteF: saves every EEPROM-backed register to internal EEPROM
+FORCE_EEPROM_UPDATE = 0x0004
+
+# ---------------------------------------------------------------------------
 # Writable register addresses (used with write_register)
 # ---------------------------------------------------------------------------
 ADDR_WRITE = {

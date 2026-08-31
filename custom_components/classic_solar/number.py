@@ -54,7 +54,6 @@ NUMBER_DESCRIPTIONS: list[ClassicSolarNumberDescription] = [
     ClassicSolarNumberDescription(
         key="absorb_voltage",
         translation_key="absorb_voltage",
-        name="Absorb Voltage",
         register_address=ADDR_WRITE["absorb_voltage"],
         write_scale=10.0,
         device_class=NumberDeviceClass.VOLTAGE,
@@ -68,7 +67,6 @@ NUMBER_DESCRIPTIONS: list[ClassicSolarNumberDescription] = [
     ClassicSolarNumberDescription(
         key="float_voltage",
         translation_key="float_voltage",
-        name="Float Voltage",
         register_address=ADDR_WRITE["float_voltage"],
         write_scale=10.0,
         device_class=NumberDeviceClass.VOLTAGE,
@@ -82,7 +80,6 @@ NUMBER_DESCRIPTIONS: list[ClassicSolarNumberDescription] = [
     ClassicSolarNumberDescription(
         key="equalize_voltage",
         translation_key="equalize_voltage",
-        name="Equalize Voltage",
         register_address=ADDR_WRITE["equalize_voltage"],
         write_scale=10.0,
         device_class=NumberDeviceClass.VOLTAGE,
@@ -97,7 +94,6 @@ NUMBER_DESCRIPTIONS: list[ClassicSolarNumberDescription] = [
     ClassicSolarNumberDescription(
         key="absorb_time_setting",
         translation_key="absorb_time_setting",
-        name="Absorb Time Setting",
         register_address=ADDR_WRITE["absorb_time_setting"],
         write_scale=1.0,
         device_class=NumberDeviceClass.DURATION,
@@ -112,7 +108,6 @@ NUMBER_DESCRIPTIONS: list[ClassicSolarNumberDescription] = [
     ClassicSolarNumberDescription(
         key="equalize_time_setting",
         translation_key="equalize_time_setting",
-        name="Equalize Time Setting",
         register_address=ADDR_WRITE["equalize_time_setting"],
         write_scale=1.0,
         device_class=NumberDeviceClass.DURATION,
@@ -127,7 +122,6 @@ NUMBER_DESCRIPTIONS: list[ClassicSolarNumberDescription] = [
     ClassicSolarNumberDescription(
         key="equalize_interval_days",
         translation_key="equalize_interval_days",
-        name="Equalize Interval",
         register_address=ADDR_WRITE["equalize_interval_days"],
         write_scale=1.0,
         native_unit_of_measurement="d",
@@ -141,7 +135,6 @@ NUMBER_DESCRIPTIONS: list[ClassicSolarNumberDescription] = [
     ClassicSolarNumberDescription(
         key="bat_current_limit",
         translation_key="bat_current_limit",
-        name="Battery Current Limit",
         register_address=ADDR_WRITE["bat_current_limit"],
         write_scale=10.0,
         device_class=NumberDeviceClass.CURRENT,
@@ -156,7 +149,6 @@ NUMBER_DESCRIPTIONS: list[ClassicSolarNumberDescription] = [
     ClassicSolarNumberDescription(
         key="max_input_current",
         translation_key="max_input_current",
-        name="Max Input Current",
         register_address=ADDR_WRITE["max_input_current"],
         write_scale=10.0,
         device_class=NumberDeviceClass.CURRENT,
@@ -171,7 +163,6 @@ NUMBER_DESCRIPTIONS: list[ClassicSolarNumberDescription] = [
     ClassicSolarNumberDescription(
         key="ending_amps",
         translation_key="ending_amps",
-        name="Ending Amps",
         register_address=ADDR_WRITE["ending_amps"],
         write_scale=10.0,
         device_class=NumberDeviceClass.CURRENT,
@@ -186,7 +177,6 @@ NUMBER_DESCRIPTIONS: list[ClassicSolarNumberDescription] = [
     ClassicSolarNumberDescription(
         key="rebulk_volts",
         translation_key="rebulk_volts",
-        name="Re-bulk Voltage",
         register_address=ADDR_WRITE["rebulk_volts"],
         write_scale=10.0,
         device_class=NumberDeviceClass.VOLTAGE,
@@ -201,7 +191,6 @@ NUMBER_DESCRIPTIONS: list[ClassicSolarNumberDescription] = [
     ClassicSolarNumberDescription(
         key="nominal_battery_voltage",
         translation_key="nominal_battery_voltage",
-        name="Nominal Battery Voltage",
         register_address=ADDR_WRITE["nominal_battery_voltage"],
         write_scale=1.0,
         device_class=NumberDeviceClass.VOLTAGE,
@@ -216,7 +205,6 @@ NUMBER_DESCRIPTIONS: list[ClassicSolarNumberDescription] = [
     ClassicSolarNumberDescription(
         key="min_absorb_time",
         translation_key="min_absorb_time",
-        name="Min Absorb Time",
         register_address=ADDR_WRITE["min_absorb_time"],
         write_scale=1.0,
         device_class=NumberDeviceClass.DURATION,
@@ -231,7 +219,6 @@ NUMBER_DESCRIPTIONS: list[ClassicSolarNumberDescription] = [
     ClassicSolarNumberDescription(
         key="max_temp_comp_voltage",
         translation_key="max_temp_comp_voltage",
-        name="Max Temp Comp Voltage",
         register_address=ADDR_WRITE["max_temp_comp_voltage"],
         write_scale=10.0,
         device_class=NumberDeviceClass.VOLTAGE,
@@ -246,7 +233,6 @@ NUMBER_DESCRIPTIONS: list[ClassicSolarNumberDescription] = [
     ClassicSolarNumberDescription(
         key="min_temp_comp_voltage",
         translation_key="min_temp_comp_voltage",
-        name="Min Temp Comp Voltage",
         register_address=ADDR_WRITE["min_temp_comp_voltage"],
         write_scale=10.0,
         device_class=NumberDeviceClass.VOLTAGE,
@@ -261,7 +247,6 @@ NUMBER_DESCRIPTIONS: list[ClassicSolarNumberDescription] = [
     ClassicSolarNumberDescription(
         key="temp_comp_value",
         translation_key="temp_comp_value",
-        name="Temp Comp Value",
         register_address=ADDR_WRITE["temp_comp_value"],
         write_scale=10.0,
         native_unit_of_measurement="mV/°C/2V",

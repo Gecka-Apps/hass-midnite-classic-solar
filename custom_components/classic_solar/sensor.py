@@ -61,7 +61,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="bat_voltage",
         translation_key="bat_voltage",
-        name="Battery Voltage",
         device_class=SensorDeviceClass.VOLTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
@@ -70,7 +69,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="pv_voltage",
         translation_key="pv_voltage",
-        name="PV Voltage",
         device_class=SensorDeviceClass.VOLTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
@@ -79,7 +77,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="bat_current",
         translation_key="bat_current",
-        name="Battery Current",
         device_class=SensorDeviceClass.CURRENT,
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
@@ -88,7 +85,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="pv_current",
         translation_key="pv_current",
-        name="PV Current",
         device_class=SensorDeviceClass.CURRENT,
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
@@ -97,7 +93,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="power",
         translation_key="power",
-        name="Power",
         device_class=SensorDeviceClass.POWER,
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfPower.WATT,
@@ -105,7 +100,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="last_voc",
         translation_key="last_voc",
-        name="Last VOC",
         device_class=SensorDeviceClass.VOLTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
@@ -115,7 +109,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="energy_today",
         translation_key="energy_today",
-        name="Energy Today",
         device_class=SensorDeviceClass.ENERGY,
         state_class=SensorStateClass.TOTAL_INCREASING,
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
@@ -124,7 +117,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="amp_hours_today",
         translation_key="amp_hours_today",
-        name="Amp Hours Today",
         state_class=SensorStateClass.TOTAL_INCREASING,
         native_unit_of_measurement="Ah",
         icon="mdi:current-dc",
@@ -132,7 +124,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="lifetime_energy",
         translation_key="lifetime_energy",
-        name="Lifetime Energy",
         device_class=SensorDeviceClass.ENERGY,
         state_class=SensorStateClass.TOTAL_INCREASING,
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
@@ -142,28 +133,24 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="charge_stage",
         translation_key="charge_stage",
-        name="Charge Stage",
         value_fn=lambda v: CHARGE_STAGES.get(v, f"Unknown ({v})"),
         icon="mdi:battery-charging",
     ),
     ClassicSolarSensorDescription(
         key="charge_stage",
         translation_key="charge_stage_code",
-        name="Charge Stage Code",
         icon="mdi:battery-charging",
         entity_registry_enabled_default=False,
     ),
     ClassicSolarSensorDescription(
         key="reason_for_resting",
         translation_key="reason_for_resting",
-        name="Reason For Resting",
         value_fn=lambda v: REASONS_FOR_RESTING.get(v, f"Unknown ({v})"),
         icon="mdi:sleep",
     ),
     ClassicSolarSensorDescription(
         key="reason_for_resting",
         translation_key="reason_for_resting_code",
-        name="Reason For Resting Code",
         icon="mdi:sleep",
         entity_registry_enabled_default=False,
     ),
@@ -171,7 +158,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="bat_temperature",
         translation_key="bat_temperature",
-        name="Battery Temperature",
         device_class=SensorDeviceClass.TEMPERATURE,
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
@@ -180,7 +166,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="fet_temperature",
         translation_key="fet_temperature",
-        name="FET Temperature",
         device_class=SensorDeviceClass.TEMPERATURE,
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
@@ -189,7 +174,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="pcb_temperature",
         translation_key="pcb_temperature",
-        name="PCB Temperature",
         device_class=SensorDeviceClass.TEMPERATURE,
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
@@ -199,7 +183,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="float_time_today",
         translation_key="float_time_today",
-        name="Float Time Today",
         device_class=SensorDeviceClass.DURATION,
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfTime.SECONDS,
@@ -208,7 +191,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="absorb_time",
         translation_key="absorb_time",
-        name="Absorb Time",
         device_class=SensorDeviceClass.DURATION,
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfTime.SECONDS,
@@ -218,7 +200,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="wb_bat_current",
         translation_key="wb_bat_current",
-        name="Whizbang Battery Current",
         device_class=SensorDeviceClass.CURRENT,
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
@@ -228,7 +209,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="soc",
         translation_key="soc",
-        name="State of Charge",
         device_class=SensorDeviceClass.BATTERY,
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=PERCENTAGE,
@@ -237,7 +217,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="remaining_amp_hours",
         translation_key="remaining_amp_hours",
-        name="Remaining Amp Hours",
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement="Ah",
         icon="mdi:battery-outline",
@@ -247,7 +226,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="vbatt_reg_setpoint_temp_comp",
         translation_key="vbatt_reg_setpoint_temp_comp",
-        name="Battery Voltage Temp Comp Setpoint",
         device_class=SensorDeviceClass.VOLTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
@@ -257,7 +235,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="state",
         translation_key="state",
-        name="Classic State",
         icon="mdi:state-machine",
         value_fn=lambda v: CLASSIC_STATES.get(v, f"Unknown ({v})"),
         entity_registry_enabled_default=False,
@@ -266,7 +243,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="shunt_temperature",
         translation_key="shunt_temperature",
-        name="Shunt Temperature",
         device_class=SensorDeviceClass.TEMPERATURE,
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
@@ -276,7 +252,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="total_amp_hours",
         translation_key="total_amp_hours",
-        name="Total Amp Hours",
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement="Ah",
         icon="mdi:battery-outline",
@@ -285,7 +260,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="positive_amp_hours",
         translation_key="positive_amp_hours",
-        name="Whizbang Positive Amp Hours",
         state_class=SensorStateClass.TOTAL_INCREASING,
         native_unit_of_measurement="Ah",
         icon="mdi:battery-plus-outline",
@@ -294,7 +268,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="negative_amp_hours",
         translation_key="negative_amp_hours",
-        name="Whizbang Negative Amp Hours",
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement="Ah",
         icon="mdi:battery-minus-outline",
@@ -303,7 +276,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="net_amp_hours",
         translation_key="net_amp_hours",
-        name="Whizbang Net Amp Hours",
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement="Ah",
         icon="mdi:battery-sync-outline",
@@ -313,7 +285,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="load_power",
         translation_key="load_power",
-        name="Load Power",
         device_class=SensorDeviceClass.POWER,
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfPower.WATT,
@@ -324,7 +295,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="battery_charge_power",
         translation_key="battery_charge_power",
-        name="Battery Charge Power",
         device_class=SensorDeviceClass.POWER,
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfPower.WATT,
@@ -335,7 +305,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="battery_discharge_power",
         translation_key="battery_discharge_power",
-        name="Battery Discharge Power",
         device_class=SensorDeviceClass.POWER,
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfPower.WATT,
@@ -346,7 +315,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="battery_power",
         translation_key="battery_power",
-        name="Battery Power",
         device_class=SensorDeviceClass.POWER,
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfPower.WATT,
@@ -358,7 +326,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="battery_charge_energy",
         translation_key="battery_charge_energy",
-        name="Battery Charge Energy",
         device_class=SensorDeviceClass.ENERGY,
         state_class=SensorStateClass.TOTAL_INCREASING,
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
@@ -369,7 +336,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="battery_discharge_energy",
         translation_key="battery_discharge_energy",
-        name="Battery Discharge Energy",
         device_class=SensorDeviceClass.ENERGY,
         state_class=SensorStateClass.TOTAL_INCREASING,
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
@@ -381,7 +347,6 @@ SENSOR_DESCRIPTIONS: list[ClassicSolarSensorDescription] = [
     ClassicSolarSensorDescription(
         key="info_flags",
         translation_key="info_flags",
-        name="Info Flags",
         entity_category=EntityCategory.DIAGNOSTIC,
         icon="mdi:flag-outline",
     ),

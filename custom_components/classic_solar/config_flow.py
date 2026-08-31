@@ -115,7 +115,7 @@ class ClassicSolarConfigFlow(ConfigFlow, domain=DOMAIN):
                     info["device_type"], f"Classic {info['device_type']}"
                 )
                 return self.async_create_entry(
-                    title=f"Midnite {model}",
+                    title=model,
                     data={
                         CONF_HOST: user_input[CONF_HOST],
                         CONF_PORT: user_input[CONF_PORT],

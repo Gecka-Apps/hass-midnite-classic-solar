@@ -113,7 +113,7 @@ class ClassicSolarForceChargeSelect(
         if value is None:
             return
         await self.coordinator.async_write_register(
-            ADDR_WRITE["force_charge_stage"], value
+            ADDR_WRITE["force_charge_stage"], value, commit_eeprom=False
         )
         self._current_option = option
         self.async_write_ha_state()
