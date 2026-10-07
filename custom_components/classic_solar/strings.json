@@ -90,7 +90,7 @@
         "button": {
             "reset_faults": { "name": "Reset Faults" },
             "force_sweep": { "name": "Force MPPT Sweep" },
-            "reset_soc": { "name": "Reset SOC to 100%" }
+            "reset_net_amp_hours": { "name": "Reset Whizbang Net Amp Hours" }
         }
     }
 }

@@ -90,7 +90,7 @@
         "button": {
             "reset_faults": { "name": "Réinitialiser les défauts" },
             "force_sweep": { "name": "Forcer un balayage MPPT" },
-            "reset_soc": { "name": "Réinitialiser le SOC à 100 %" }
+            "reset_net_amp_hours": { "name": "Réinitialiser les Ah nets Whizbang" }
         }
     }
 }

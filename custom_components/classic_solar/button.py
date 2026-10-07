@@ -47,7 +47,7 @@ def _write_trigger(
     return press
 
 
-async def _reset_soc(coordinator: ClassicSolarCoordinator) -> None:
+async def _reset_net_amp_hours(coordinator: ClassicSolarCoordinator) -> None:
     """Clear the WhizBang Jr net amp-hours counter (ClearLogsCat category 5)."""
     await coordinator.async_clear_logs(CLEAR_LOGS_CAT_WBJR_NET_AH)
 
@@ -76,10 +76,10 @@ BUTTON_DESCRIPTIONS: list[ClassicSolarButtonDescription] = [
         entity_registry_enabled_default=False,
     ),
     ClassicSolarButtonDescription(
-        key="reset_soc",
-        translation_key="reset_soc",
-        press_fn=_reset_soc,
-        icon="mdi:battery-sync",
+        key="reset_net_amp_hours",
+        translation_key="reset_net_amp_hours",
+        press_fn=_reset_net_amp_hours,
+        icon="mdi:battery-sync-outline",
     ),
 ]
 
