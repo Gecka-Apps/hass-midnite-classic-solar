@@ -89,7 +89,8 @@
         },
         "button": {
             "reset_faults": { "name": "Reset Faults" },
-            "force_sweep": { "name": "Force MPPT Sweep" }
+            "force_sweep": { "name": "Force MPPT Sweep" },
+            "reset_soc": { "name": "Reset SOC to 100%" }
         }
     }
 }

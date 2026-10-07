@@ -20,6 +20,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
 
 from homeassistant.components.button import ButtonEntity, ButtonEntityDescription
@@ -28,36 +29,57 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import ADDR_FORCE_FLAGS_HIGH, DOMAIN
+from .const import ADDR_FORCE_FLAGS_HIGH, CLEAR_LOGS_CAT_WBJR_NET_AH, DOMAIN
 from .coordinator import ClassicSolarCoordinator
 
 # Remote buttons: register 4221 (addr 4220)
 ADDR_REMOTE_BUTTONS = 4220
 
 
+def _write_trigger(
+    address: int, value: int
+) -> Callable[[ClassicSolarCoordinator], Awaitable[None]]:
+    """Build a press handler that writes a one-shot value to a trigger register."""
+
+    async def press(coordinator: ClassicSolarCoordinator) -> None:
+        await coordinator.async_write_register(address, value, commit_eeprom=False)
+
+    return press
+
+
+async def _reset_soc(coordinator: ClassicSolarCoordinator) -> None:
+    """Clear the WhizBang Jr net amp-hours counter (ClearLogsCat category 5)."""
+    await coordinator.async_clear_logs(CLEAR_LOGS_CAT_WBJR_NET_AH)
+
+
 @dataclass(frozen=True, kw_only=True)
 class ClassicSolarButtonDescription(ButtonEntityDescription):
     """Describe a Classic Solar button."""
 
-    register_address: int
-    register_value: int
+    press_fn: Callable[[ClassicSolarCoordinator], Awaitable[None]]
 
 
 BUTTON_DESCRIPTIONS: list[ClassicSolarButtonDescription] = [
     ClassicSolarButtonDescription(
         key="reset_faults",
         translation_key="reset_faults",
-        register_address=ADDR_FORCE_FLAGS_HIGH,
-        register_value=0x0080,  # ForceResetFaultsF (high word of 0x00800000)
+        # ForceResetFaultsF (high word of 0x00800000)
+        press_fn=_write_trigger(ADDR_FORCE_FLAGS_HIGH, 0x0080),
         icon="mdi:alert-remove",
     ),
     ClassicSolarButtonDescription(
         key="force_sweep",
         translation_key="force_sweep",
-        register_address=ADDR_REMOTE_BUTTONS,
-        register_value=0x0010,  # ENTER_key
+        # ENTER_key
+        press_fn=_write_trigger(ADDR_REMOTE_BUTTONS, 0x0010),
         icon="mdi:refresh",
         entity_registry_enabled_default=False,
+    ),
+    ClassicSolarButtonDescription(
+        key="reset_soc",
+        translation_key="reset_soc",
+        press_fn=_reset_soc,
+        icon="mdi:battery-sync",
     ),
 ]
 
@@ -92,8 +114,4 @@ class ClassicSolarButton(
         self._attr_device_info = coordinator.device_info
 
     async def async_press(self) -> None:
-        await self.coordinator.async_write_register(
-            self.entity_description.register_address,
-            self.entity_description.register_value,
-            commit_eeprom=False,
-        )
+        await self.entity_description.press_fn(self.coordinator)

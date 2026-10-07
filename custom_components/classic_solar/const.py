@@ -61,6 +61,27 @@ ADDR_FORCE_FLAGS_HIGH = 4160  # register 4161
 FORCE_EEPROM_UPDATE = 0x0004
 
 # ---------------------------------------------------------------------------
+# ClearLogsCat: register 4354, two-step handshake (spec table 4354-1).
+# Arm with 0x8000 | category, wait at least 750 ms, confirm with
+# 0x4000 | category. The Classic then reports the outcome in the same register.
+# ---------------------------------------------------------------------------
+ADDR_CLEAR_LOGS = 4353  # register 4354
+CLEAR_LOGS_ARM = 0x8000
+CLEAR_LOGS_CONFIRM = 0x4000
+CLEAR_LOGS_SUCCESS = 0x0500
+CLEAR_LOGS_FAILURE = 0x0A00
+CLEAR_LOGS_HANDSHAKE_DELAY = 1.0  # seconds, spec minimum is 0.75
+CLEAR_LOGS_RESULT_TIMEOUT = 10.0  # seconds, "operation may take a few seconds"
+
+CLEAR_LOGS_CAT_DAILY = 1
+CLEAR_LOGS_CAT_HOURLY = 2
+CLEAR_LOGS_CAT_LIFETIME_KWH = 3
+CLEAR_LOGS_CAT_LIFETIME_AH = 4
+CLEAR_LOGS_CAT_WBJR_NET_AH = 5
+CLEAR_LOGS_CAT_WBJR_POSITIVE_AH = 6
+CLEAR_LOGS_CAT_WBJR_NEGATIVE_AH = 7
+
+# ---------------------------------------------------------------------------
 # Writable register addresses (used with write_register)
 # ---------------------------------------------------------------------------
 ADDR_WRITE = {

@@ -34,6 +34,7 @@ from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.storage import Store
 
 from .const import (
+    ADDR_CLEAR_LOGS,
     ADDR_FORCE_FLAGS_LOW,
     ADDR_MAX_INPUT_CURRENT,
     ADDR_WRITE,
@@ -49,6 +50,12 @@ from .const import (
     BLOCK_NAME_COUNT,
     BLOCK_WHIZBANG_ADDR,
     BLOCK_WHIZBANG_COUNT,
+    CLEAR_LOGS_ARM,
+    CLEAR_LOGS_CONFIRM,
+    CLEAR_LOGS_FAILURE,
+    CLEAR_LOGS_HANDSHAKE_DELAY,
+    CLEAR_LOGS_RESULT_TIMEOUT,
+    CLEAR_LOGS_SUCCESS,
     DEFAULT_SCAN_INTERVAL,
     DEFAULT_SLAVE_ID,
     DEVICE_TYPES,
@@ -405,4 +412,51 @@ class ClassicSolarCoordinator(DataUpdateCoordinator[dict]):
                     )
 
         # Refresh data after successful write
+        await self.async_request_refresh()
+
+    async def async_clear_logs(self, category: int) -> None:
+        """Clear one log category through the ClearLogsCat handshake.
+
+        Register 4354 takes the category armed with 0x8000, then, after the
+        delay the spec requires, the same category confirmed with 0x4000.
+        The Classic performs the erase asynchronously and reports the outcome
+        in that register: 0x0500 on success, 0x0A00 on failure. The Modbus
+        lock is held for the whole exchange so a poll cannot slip between the
+        two writes and reset the Classic's handshake timer.
+        """
+        async with self._modbus_lock:
+            for value in (CLEAR_LOGS_ARM | category, CLEAR_LOGS_CONFIRM | category):
+                result = await self.client.write_register(
+                    ADDR_CLEAR_LOGS, value, device_id=DEFAULT_SLAVE_ID
+                )
+                if result.isError():
+                    raise HomeAssistantError(
+                        f"Failed to write 0x{value:04X} to the ClearLogsCat register"
+                    )
+                if value & CLEAR_LOGS_ARM:
+                    await asyncio.sleep(CLEAR_LOGS_HANDSHAKE_DELAY)
+
+            deadline = time.monotonic() + CLEAR_LOGS_RESULT_TIMEOUT
+            while True:
+                await asyncio.sleep(0.5)
+                result = await self.client.read_holding_registers(
+                    ADDR_CLEAR_LOGS, count=1, device_id=DEFAULT_SLAVE_ID
+                )
+                if result.isError():
+                    raise HomeAssistantError(
+                        "Failed to read back the ClearLogsCat register"
+                    )
+                status = result.registers[0]
+                if status == CLEAR_LOGS_SUCCESS:
+                    break
+                if status == CLEAR_LOGS_FAILURE:
+                    raise HomeAssistantError(
+                        f"The Classic refused to clear log category {category}"
+                    )
+                if time.monotonic() > deadline:
+                    raise HomeAssistantError(
+                        f"No answer from the Classic after clearing log category "
+                        f"{category} (register reads 0x{status:04X})"
+                    )
+
         await self.async_request_refresh()

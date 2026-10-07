@@ -89,7 +89,8 @@
         },
         "button": {
             "reset_faults": { "name": "Réinitialiser les défauts" },
-            "force_sweep": { "name": "Forcer un balayage MPPT" }
+            "force_sweep": { "name": "Forcer un balayage MPPT" },
+            "reset_soc": { "name": "Réinitialiser le SOC à 100 %" }
         }
     }
 }
