@@ -10,5 +10,5 @@
     "issue_tracker": "https://github.com/Gecka-Apps/hass-midnite-classic-solar/issues",
     "homeassistant": "2024.1.0",
     "requirements": ["pymodbus>=3.6.0"],
-    "version": "1.0.1"
+    "version": "1.0.2"
 }
