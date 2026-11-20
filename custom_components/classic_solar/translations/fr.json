@@ -91,6 +91,9 @@
             "reset_faults": { "name": "Réinitialiser les défauts" },
             "force_sweep": { "name": "Forcer un balayage MPPT" },
             "reset_net_amp_hours": { "name": "Réinitialiser les Ah nets Whizbang" }
+        },
+        "switch": {
+            "charging": { "name": "Charge" }
         }
     }
 }

@@ -72,7 +72,8 @@ class ClassicSolarMPPTSelect(
         raw = self.coordinator.data.get("mppt_mode")
         if raw is None:
             return None
-        return MPPT_MODES.get(raw)
+        # The table lists each mode with its enable bit set.
+        return MPPT_MODES.get(raw | 0x0001)
 
     async def async_select_option(self, option: str) -> None:
         value = MPPT_MODES_REVERSE.get(option)

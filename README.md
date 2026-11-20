@@ -13,6 +13,7 @@ Home Assistant integration for Midnite Classic 150/200/250 solar charge controll
 - **Charge settings** — absorb/float/equalize voltages, current limits, timing parameters
 - **MPPT control** — select MPPT mode (Solar, Dynamic, Wind Track, etc.)
 - **Force charge** — force bulk, float, or equalize stage
+- **Charging switch** — stop and resume charging while the Classic stays powered
 - **WhizBang Jr support** — SOC, net/positive/negative Ah, load power, battery charge/discharge power and energy
 - **Diagnostics** — FET/PCB/shunt temperatures, charge stage codes, resting reasons, info flags
 - **Action buttons** — reset faults, force MPPT sweep, reset WhizBang Jr net amp hours
@@ -25,6 +26,7 @@ Home Assistant integration for Midnite Classic 150/200/250 solar charge controll
 - **number** — absorb voltage, float voltage, equalize voltage, absorb/equalize time, equalize interval, battery current limit, max input current, ending amps, re-bulk voltage, nominal battery voltage, min absorb time, temp comp voltage min/max, temp comp value
 - **select** — MPPT mode, force charge stage
 - **button** — reset faults, force MPPT sweep, reset WhizBang net amp hours
+- **switch** — charging
 
 ## Requirements
 

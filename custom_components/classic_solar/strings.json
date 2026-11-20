@@ -91,6 +91,9 @@
             "reset_faults": { "name": "Reset Faults" },
             "force_sweep": { "name": "Force MPPT Sweep" },
             "reset_net_amp_hours": { "name": "Reset Whizbang Net Amp Hours" }
+        },
+        "switch": {
+            "charging": { "name": "Charging" }
         }
     }
 }
